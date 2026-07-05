@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
-<title>Rumbo · Control de gastos de viaje</title>
+<title>ARViajes · Control de gastos de viaje</title>
 <meta name="description" content="Control de gastos de viaje: presupuestos, multimoneda, gastos compartidos, itinerario y reportes.">
 <!-- iPhone: agregar a pantalla de inicio -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Rumbo">
+<meta name="apple-mobile-web-app-title" content="ARViajes">
 <meta name="theme-color" content="#152430">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23152430'/%3E%3Ctext x='50' y='66' font-size='52' text-anchor='middle'%3E🧭%3C/text%3E%3C/svg%3E">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50' y='72' font-size='70' text-anchor='middle'%3E🧭%3C/text%3E%3C/svg%3E">
@@ -187,7 +187,7 @@ canvas{max-width:100%}
 <!-- PANTALLA DE BLOQUEO -->
 <div id="lock">
   <div style="font-size:44px">🧭</div>
-  <h2 class="disp">Rumbo está bloqueado</h2>
+  <h2 class="disp">ARViajes está bloqueado</h2>
   <p id="lockMsg" style="opacity:.7;font-size:14px">Ingresa tu PIN de 4 dígitos</p>
   <input id="pinInput" type="password" inputmode="numeric" maxlength="4" autocomplete="off">
   <button class="btn" onclick="tryUnlock()">Desbloquear</button>
@@ -195,7 +195,7 @@ canvas{max-width:100%}
 
 <header>
   <div class="hrow">
-    <div class="logo">🧭 Rumbo <small>viajes</small></div>
+    <div class="logo">✈️ ARViajes</div>
     <select id="tripSelect" onchange="setActiveTrip(this.value)" aria-label="Viaje activo"></select>
     <button class="iconbtn" onclick="openTripModal()" title="Nuevo viaje" aria-label="Nuevo viaje">＋</button>
   </div>
@@ -363,6 +363,11 @@ canvas{max-width:100%}
 </section>
 
 </main>
+
+<footer style="text-align:center;padding:20px 14px calc(30px + env(safe-area-inset-bottom));color:var(--mut);font-size:12px;font-family:var(--disp)">
+  ✈️ ARViajes · Desarrollado por <b style="color:var(--ink)">Ronald Coba Linares</b><br>
+  <span style="opacity:.65">© 2026 · Todos los derechos reservados</span>
+</footer>
 
 <button class="fab" id="fab" onclick="openGastoModal()" title="Nuevo gasto" aria-label="Nuevo gasto">＋</button>
 
@@ -539,7 +544,7 @@ const TABS = [
 ];
 
 /* ================== ESTADO Y PERSISTENCIA ================== */
-const KEY='rumbo_v1';
+const KEY='arviajes_v1';
 let S = load();
 function load(){
   try{ const raw = localStorage.getItem(KEY); if(raw) return JSON.parse(raw); }catch(e){}
@@ -723,7 +728,7 @@ function buildAlerts(t){
 /* ================== DASHBOARD ================== */
 function renderDash(){
   const t=trip(); const box=$('dashBody'); const ab=$('alertsBox');
-  if(!t){ ab.innerHTML=''; box.innerHTML=`<div class="empty"><span class="big">🧭</span>Bienvenido a <b>Rumbo</b>.<br>Crea tu primer viaje con el botón ＋ de arriba.</div>`; return; }
+  if(!t){ ab.innerHTML=''; box.innerHTML=`<div class="empty"><span class="big">🧭</span>Bienvenido a <b>ARViajes</b>.<br>Crea tu primer viaje con el botón ＋ de arriba.</div>`; return; }
   ab.innerHTML = buildAlerts(t).map(([c,e,m])=>`<div class="alert ${c}"><span>${e}</span><span>${m}</span></div>`).join('');
   const gastado=totalGastado(t), rest=t.presupuesto-gastado;
   const pct = t.presupuesto>0 ? gastado/t.presupuesto*100 : 0;
@@ -1196,7 +1201,7 @@ function exportCSV(){
 function exportBackup(){
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:'application/json'}));
-  a.download=`rumbo_respaldo_${hoy()}.json`; a.click();
+  a.download=`arviajes_respaldo_${hoy()}.json`; a.click();
 }
 function importBackup(inp){
   const f=inp.files[0]; if(!f) return;
