@@ -38,18 +38,24 @@ a{color:var(--jade)}
 
 /* ===== Header ===== */
 header{background:var(--ink);color:#fff;padding:calc(10px + env(safe-area-inset-top)) 16px 0;position:sticky;top:0;z-index:400}
-.hrow{display:flex;align-items:center;gap:10px;max-width:1080px;margin:0 auto;padding-bottom:8px}
+.hrow{display:flex;align-items:center;gap:10px;max-width:1080px;margin:0 auto;padding-bottom:12px}
 .logo{font-family:var(--disp);font-weight:700;font-size:20px;letter-spacing:.5px;display:flex;align-items:center;gap:8px}
 .logo small{font-weight:400;opacity:.55;font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
 #tripSelect{margin-left:auto;background:var(--ink2);color:#fff;border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:7px 10px;max-width:46vw;font-size:14px}
 .iconbtn{background:var(--ink2);border:1px solid rgba(255,255,255,.15);color:#fff;border-radius:10px;width:36px;height:36px;font-size:16px;flex:none}
-nav{overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-nav::-webkit-scrollbar{display:none}
-.tabs{display:flex;gap:2px;max-width:1080px;margin:0 auto;white-space:nowrap}
-.tab{background:none;border:none;color:rgba(255,255,255,.6);padding:10px 13px;font-size:13.5px;font-weight:600;border-bottom:3px solid transparent;font-family:var(--disp)}
-.tab.act{color:#fff;border-bottom-color:var(--amber)}
+/* ===== Barra de navegación inferior ===== */
+.bottomnav{position:fixed;left:0;right:0;bottom:0;z-index:400;background:var(--ink);display:flex;justify-content:space-around;align-items:stretch;padding-bottom:env(safe-area-inset-bottom);box-shadow:0 -2px 14px rgba(21,36,48,.18)}
+.bnav{background:none;border:none;color:rgba(255,255,255,.55);flex:1;padding:8px 2px 7px;display:flex;flex-direction:column;align-items:center;gap:3px;font-family:var(--disp);font-weight:600;font-size:10.5px;position:relative}
+.bnav .ic{font-size:20px;line-height:1}
+.bnav.act{color:#fff}
+.bnav.act::before{content:"";position:absolute;top:0;width:26px;height:3px;border-radius:0 0 3px 3px;background:var(--amber)}
+/* Menú completo (grid) */
+.menugrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.mg{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:16px 8px;display:flex;flex-direction:column;align-items:center;gap:7px;font-family:var(--disp);font-weight:600;font-size:12.5px;color:var(--ink);cursor:pointer}
+.mg .ic{font-size:26px}
+.mg.act{border-color:var(--jade);background:var(--jade-soft);color:var(--jade)}
 
-main{max-width:1080px;margin:0 auto;padding:16px 14px 90px}
+main{max-width:1080px;margin:0 auto;padding:16px 14px calc(96px + env(safe-area-inset-bottom))}
 section{display:none}
 section.act{display:block;animation:fade .18s ease}
 @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
@@ -100,7 +106,7 @@ section.act{display:block;animation:fade .18s ease}
 .btn.danger{background:var(--coral)}
 .btn.sm{padding:7px 12px;font-size:13px;border-radius:9px}
 .btn:disabled{opacity:.5}
-.fab{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom));width:58px;height:58px;border-radius:50%;background:var(--jade);color:#fff;border:none;font-size:28px;box-shadow:0 6px 18px rgba(15,123,108,.4);z-index:300;display:none}
+.fab{position:fixed;right:18px;bottom:calc(74px + env(safe-area-inset-bottom));width:58px;height:58px;border-radius:50%;background:var(--jade);color:#fff;border:none;font-size:28px;box-shadow:0 6px 18px rgba(15,123,108,.4);z-index:410;display:none}
 label{display:block;font-size:12.5px;font-weight:600;color:var(--ink2);margin:11px 0 4px}
 input,select,textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px 11px;background:#fff;color:var(--ink)}
 input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--jade);outline-offset:1px}
@@ -174,7 +180,7 @@ canvas{max-width:100%}
 
 /* Print (reporte PDF) */
 @media print{
-  header,nav,.fab,.noprint,#lock{display:none!important}
+  header,nav,.bottomnav,.fab,.noprint,#lock{display:none!important}
   body{background:#fff}
   main{padding:0;max-width:100%}
   section{display:none}#view-reporte{display:block!important}
@@ -199,7 +205,6 @@ canvas{max-width:100%}
     <select id="tripSelect" onchange="setActiveTrip(this.value)" aria-label="Viaje activo"></select>
     <button class="iconbtn" onclick="openTripModal()" title="Nuevo viaje" aria-label="Nuevo viaje">＋</button>
   </div>
-  <nav><div class="tabs" id="tabs"></div></nav>
 </header>
 
 <main id="main">
@@ -364,12 +369,22 @@ canvas{max-width:100%}
 
 </main>
 
-<footer style="text-align:center;padding:20px 14px calc(30px + env(safe-area-inset-bottom));color:var(--mut);font-size:12px;font-family:var(--disp)">
+<footer style="text-align:center;padding:20px 14px 10px;color:var(--mut);font-size:12px;font-family:var(--disp)">
   ✈️ ARViajes · Desarrollado por <b style="color:var(--ink)">Ronald Coba Linares</b><br>
   <span style="opacity:.65">© 2026 · Todos los derechos reservados</span>
 </footer>
 
 <button class="fab" id="fab" onclick="openGastoModal()" title="Nuevo gasto" aria-label="Nuevo gasto">＋</button>
+
+<!-- BARRA DE NAVEGACIÓN INFERIOR -->
+<nav class="bottomnav" id="bottomnav"></nav>
+
+<!-- MENÚ COMPLETO -->
+<div class="modal" id="mMenu"><div class="sheet">
+  <button class="close" onclick="closeModal('mMenu')" aria-label="Cerrar">✕</button>
+  <h2 style="margin-bottom:12px">Menú</h2>
+  <div class="menugrid" id="menuGrid"></div>
+</div></div>
 
 <!-- ============ MODAL: VIAJE ============ -->
 <div class="modal" id="mTrip"><div class="sheet">
@@ -439,7 +454,7 @@ canvas{max-width:100%}
     <span class="mut" id="gGPStxt">Sin ubicación</span>
     <input type="hidden" id="gLat"><input type="hidden" id="gLng">
   </div>
-  <label for="gFoto">Foto del recibo</label><input id="gFoto" type="file" accept="image/*" capture="environment">
+  <label for="gFoto">Foto del recibo</label><input id="gFoto" type="file" accept="image/*">
   <div id="gFotoPrev"></div>
   <label for="gTags">Etiquetas (separadas por coma)</label><input id="gTags" placeholder="playa, grupo, imperdible">
   <div class="rowbtns" style="margin-top:16px">
@@ -515,8 +530,11 @@ canvas{max-width:100%}
 
 <!-- ============ MODAL: VER FOTO ============ -->
 <div class="modal" id="mFoto"><div class="sheet" style="text-align:center">
-  <button class="close" onclick="closeModal('mFoto')" aria-label="Cerrar">✕</button>
-  <div id="mFotoBody" style="margin-top:24px"></div>
+  <div style="position:sticky;top:-18px;background:var(--paper);margin:-18px -16px 10px;padding:12px 16px;z-index:5;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)">
+    <button class="btn sm dark" onclick="closeModal('mFoto')">← Volver</button>
+    <a id="mFotoDL" class="btn sm ghost" style="text-decoration:none;display:none" href="#" download>⬇ Descargar</a>
+  </div>
+  <div id="mFotoBody"></div>
 </div></div>
 
 <script>
@@ -613,11 +631,23 @@ function convertir(monto, de, a){
 
 /* ================== NAVEGACIÓN ================== */
 let currentView='inicio';
+// Ítems fijos de la barra inferior [id, icono, etiqueta]
+const BOTTOM=[['inicio','🏠','Inicio'],['gastos','💸','Gastos'],['stats','📊','Stats'],['viajes','🧳','Viajes']];
+const BOTTOM_IDS=BOTTOM.map(b=>b[0]);
 function buildTabs(){
-  $('tabs').innerHTML = TABS.map(([id,lb])=>`<button class="tab ${id===currentView?'act':''}" onclick="go('${id}')">${lb}</button>`).join('');
+  const inMenu = !BOTTOM_IDS.includes(currentView);
+  const btns = BOTTOM.map(([id,ic,lb])=>`<button class="bnav ${id===currentView?'act':''}" onclick="go('${id}')"><span class="ic">${ic}</span>${lb}</button>`).join('');
+  const masBtn = `<button class="bnav ${inMenu?'act':''}" onclick="openMenu()"><span class="ic">☰</span>Más</button>`;
+  $('bottomnav').innerHTML = btns + masBtn;
+  // Grid del menú completo (todas las secciones)
+  $('menuGrid').innerHTML = TABS.map(([id,lb])=>{
+    const ic=lb.split(' ')[0], txt=lb.replace(/^\S+ /,'');
+    return `<button class="mg ${id===currentView?'act':''}" onclick="go('${id}');closeModal('mMenu')"><span class="ic">${ic}</span>${txt}</button>`;
+  }).join('');
 }
+function openMenu(){ buildTabs(); openModal('mMenu'); }
 function go(v){
-  currentView=v; buildTabs();
+  currentView=v; buildTabs(); closeModal('mMenu');
   document.querySelectorAll('main>section').forEach(s=>s.classList.remove('act'));
   $('view-'+v).classList.add('act');
   $('fab').style.display = (['inicio','gastos'].includes(v) && trip()) ? 'block':'none';
@@ -798,6 +828,7 @@ function gastoItemHTML(g){
 }
 function verFoto(id){
   const g=trip().gastos.find(x=>x.id===id); if(!g||!g.foto) return;
+  $('mFotoDL').style.display='none';
   $('mFotoBody').innerHTML=`<img src="${g.foto}" style="border-radius:12px">`;
   openModal('mFoto');
 }
@@ -1053,8 +1084,14 @@ function saveDoc(){
 function delDoc(id){ if(!confirm('¿Eliminar documento?'))return; const t=trip(); t.documentos=t.documentos.filter(x=>x.id!==id); save(); renderDocs(); }
 function verDoc(id){
   const d=trip().documentos.find(x=>x.id===id); if(!d) return;
-  if(d.mime==='application/pdf'){ const w=window.open(); w.document.write(`<iframe src="${d.data}" style="width:100%;height:100vh;border:0"></iframe>`); }
-  else { $('mFotoBody').innerHTML=`<img src="${d.data}" style="border-radius:12px">`; openModal('mFoto'); }
+  const dl=$('mFotoDL'); dl.href=d.data; dl.download=(d.nombre||'documento')+(d.mime==='application/pdf'?'.pdf':'.jpg'); dl.style.display='inline-block';
+  if(d.mime==='application/pdf'){
+    $('mFotoBody').innerHTML=`<iframe src="${d.data}" style="width:100%;height:72vh;border:0;border-radius:8px"></iframe>
+      <p class="mut" style="margin-top:8px">Si el PDF no se muestra, usa el botón <b>Descargar</b> de arriba.</p>`;
+  } else {
+    $('mFotoBody').innerHTML=`<img src="${d.data}" style="border-radius:12px">`;
+  }
+  openModal('mFoto');
 }
 function renderDocs(){
   const t=trip(); const box=$('docsList');
